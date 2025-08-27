@@ -1,15 +1,33 @@
 {
+  "name": "wb_tariff_api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon --exec ts-node ./src/app.ts",
+    "build": "tsc",
+    "knex": "knex --knexfile knexfile.ts",
+    "migrate:make": "knex migrate:make -x ts --knexfile ./src/knexfile.ts",
+    "migrate:up": "knex migrate:latest --knexfile ./src/knexfile.ts",
+    "migrate:latest": "knex migrate:up --knexfile ./src/knexfile.ts",
+    "migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
+    "migrate:down": "knex migrate:down --knexfile ./src/knexfile.ts"
+  },
   "dependencies": {
+    "awilix": "^12.0.5",
+    "awilix-express": "^9.0.2",
+    "axios": "^1.11.0",
     "body-parser": "^2.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "mysql2": "^3.14.3",
-    "sequelize": "^6.37.7"
+    "knex": "^3.1.0",
+    "node-cron": "^4.2.1",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.3",
     "@types/node": "^24.2.1",
+    "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   }

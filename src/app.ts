@@ -1,27 +1,28 @@
+import { scopePerRequest } from "awilix-express";
 import express from "express";
-import { config } from "dotenv";
-config();
-
-import { container } from "./container/container.js";
-import { sequelize } from "./config/database.js";
+// import { syncTariffs } from './controllers/tariffController';
+import cron from "node-cron";
+import container from "./container/di-container";
+import tariffsRouter from "./routes/tariffsRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(scopePerRequest(container));
 
-app.post("/api/deals", container.dealsController.createDeal);
-app.post("/api/contacts", container.contactsController.createContact);
-app.post("/api/webhooks", container.webhooksController.handleWebhook);
+app.use("/api", tariffsRouter);
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    app.listen(PORT, () => {
-      console.log(`Server started on http://localhost:${PORT}`);
-    });
-  } catch (err) {
-    console.error("ERROR", err);
-    process.exit(1);
-  }
-})();
+// cron.schedule("0 * * * *", async () => {
+//   console.log("Running hourly sync...");
+//   try {
+//     // await syncTariffs({} as any, {} as any);
+//   } catch (error) {
+//     console.error("Error in scheduled sync:", error);
+//   }
+// });
+
+// Запуск приложения
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
