@@ -4,6 +4,7 @@ import express from "express";
 import cron from "node-cron";
 import container from "./container/di-container";
 import tariffsRouter from "./routes/tariffsRoutes";
+import "reflect-metadata";
 
 const app = express();
 const PORT = process.env.PORT || 3000;

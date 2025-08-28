@@ -1,15 +1,21 @@
-import { createContainer, asClass, asValue } from "awilix";
+import { createContainer, asClass, asValue, InjectionMode } from "awilix";
 import { TariffsRepository } from "../repositories/tariffs.repository";
 import { TariffsService, WbApiService } from "../services";
-import { db } from "../database/connection";
+import knex, { Knex } from "knex";
+import knexConfig from "../knexfile";
 
 const container = createContainer();
+export const db: Knex = knex(knexConfig);
+
+container.options = {
+  injectionMode: InjectionMode.PROXY,
+};
 
 container.register({
   db: asValue(db),
-  tariffsRepository: asClass(TariffsRepository).singleton(),
-  tariffsService: asClass(TariffsService).singleton(),
-  wbApiService: asClass(WbApiService).singleton(),
+  TariffsService: asClass(TariffsService).singleton(),
+  TariffsRepository: asClass(TariffsRepository).singleton(),
+  WbApiService: asClass(WbApiService).singleton(),
 });
 
 export default container;

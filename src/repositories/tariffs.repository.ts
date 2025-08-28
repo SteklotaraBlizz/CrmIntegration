@@ -1,10 +1,11 @@
 import { Knex } from "knex";
 import { WbApiService } from "../services";
 import { ITariff } from "../models";
+import { DbClient } from "../database/connection";
 
 export class TariffsRepository {
   constructor(
-    private readonly db: Knex,
+    private readonly db: DbClient,
     private readonly wbApiService: WbApiService
   ) {}
 
@@ -38,8 +39,6 @@ export class TariffsRepository {
     const sortedData = [...processedData].sort(
       (a, b) => Number(a.boxDeliveryCoefExpr) - Number(b.boxDeliveryCoefExpr)
     );
-
-    console.log(sortedData);
 
     return sortedData;
   }

@@ -1,18 +1,13 @@
-import * as dotenv from "dotenv";
 import axios from "axios";
 import { IRawTariff } from "../models";
-
-dotenv.config({ path: "../../.env" });
-
-const WB_API_URL = process.env.WB_API_URL || "";
-const token = process.env.TOKEN;
+import { appConfig } from "../config";
 
 export class WbApiService {
   async getTarrifs(date: string): Promise<IRawTariff> {
     try {
-      const response = await axios.get(`${WB_API_URL}?date:${date}`, {
+      const response = await axios.get(`${appConfig.WB_API_URL}?date=${date}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${appConfig.TOKEN}`,
         },
       });
       return response.data.response.data;

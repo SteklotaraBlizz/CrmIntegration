@@ -1,15 +1,16 @@
 import * as dotenv from "dotenv";
 import { Knex } from "knex";
+import { appConfig } from "./config";
 
 dotenv.config({ path: "../.env" });
 const knexConfig: Knex.Config = {
   client: "postgresql",
   connection: {
-    host: process.env.DB_HOST || "localhost",
-    port: parseInt(process.env.DB_PORT || "5432"),
-    database: process.env.DB_NAME || "database",
-    user: process.env.DB_USER || "postgres",
-    password: process.env.DB_PASSWORD || "admin",
+    host: appConfig.DB_HOST || "localhost",
+    port: appConfig.DB_PORT || 5432,
+    database: appConfig.DB_NAME || "database",
+    user: appConfig.DB_USER || "postgres",
+    password: appConfig.DB_PASSWORD || "admin",
   },
   pool: {
     min: 2,
