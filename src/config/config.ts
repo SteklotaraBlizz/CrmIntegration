@@ -10,7 +10,7 @@ interface IConfig {
   DB_USER: string;
   WB_API_URL: string;
   TOKEN: string;
-  GOOGLE_SHEETS_KEY_FILE: string;
+  GOOGLE_APPLICATION_CREDENTIALS: string;
   GOOGLE_SHEETS_ID: string;
   NODE_ENV: string;
 }
